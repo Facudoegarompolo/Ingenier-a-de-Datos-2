@@ -1,4 +1,4 @@
-package com.example;
+package com.uade.tpo;
 
 public class Main {
     public static void main(String[] args) {
