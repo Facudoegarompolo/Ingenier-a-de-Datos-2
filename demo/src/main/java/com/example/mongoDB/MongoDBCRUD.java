@@ -1,17 +1,39 @@
 package com.example.mongoDB;
 
+import java.util.Optional;
+
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 
+import com.example.model.User;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 @Component
 public class MongoDBCRUD {
 
-    // Método de búsqueda por mail
-    public void buscarUsuarioPorMail(MongoCollection<Document> collection, String mail) {
-        System.out.println("🔍 Resultados de búsqueda para mail '" + mail + "':");
-        collection.find(new Document("mail", mail))
-                  .forEach(doc -> System.out.println(doc.toJson()));
+    private final MongoDatabase mongoDatabase;
+
+    public MongoDBCRUD(MongoDatabase mongoDatabase) {
+        this.mongoDatabase = mongoDatabase;
+    }
+
+    public Optional<User> buscarUsuarioPorMailYPassword(String mail, String password) {
+        MongoCollection<Document> collection = mongoDatabase.getCollection("user");
+        Document filtro = new Document("mail", mail).append("password", password);
+
+        Document doc = collection.find(filtro).first();
+        if (doc == null) return Optional.empty();
+
+        String id = doc.containsKey("_id") ? ((ObjectId) doc.get("_id")).toHexString() : null;
+        String nombre = doc.getString("nombre");
+        String mailField = doc.getString("mail");
+        String pass = doc.getString("password");
+        Integer edad = doc.containsKey("edad") ? doc.getInteger("edad") : null;
+        String tipoUsuario = doc.containsKey("tipoUsuario") ? doc.getString("tipoUsuario") : "user";
+
+        User user = new User(id, nombre, mailField, pass, edad, tipoUsuario);
+        return Optional.of(user);
     }
 }
