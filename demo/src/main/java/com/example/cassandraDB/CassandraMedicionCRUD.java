@@ -1,8 +1,9 @@
-package com.example.cassandra;
+package com.example.cassandraDB;
 
 import com.datastax.oss.driver.api.core.cql.*;
 import com.datastax.oss.driver.api.core.uuid.Uuids;
 import org.springframework.stereotype.Component;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class CassandraMedicionCRUD {
 
     public CassandraMedicionCRUD(CqlSession session) {
         this.session = session;
-        
+
         this.insertMedicionPorSensorId = session.prepare(
                 "INSERT INTO mediciones_por_sensor_id (" +
                         "sensor_id, fecha_hora, medicion_id, temperatura, humedad, estado) " +
