@@ -13,7 +13,6 @@ public class CassandraMedicionCRUD {
 
     private final CqlSession session;
 
-    // Prepared statements
     private final PreparedStatement insertMedicionPorSensorId;
     private final PreparedStatement insertMedicionPorPais;
     private final PreparedStatement insertMedicionPorCiudad;
@@ -68,7 +67,6 @@ public class CassandraMedicionCRUD {
         );
     }
 
-    // ✅ Main method to save a measurement across ALL tables
     public UUID guardarMedicion(
             UUID sensorId,
             String sensorName,
@@ -79,9 +77,8 @@ public class CassandraMedicionCRUD {
             String estado
     ) {
         UUID medicionId = Uuids.timeBased();
-        Instant fechaHora = Instant.now(); // timestamp
+        Instant fechaHora = Instant.now();
 
-        // Execute inserts in all tables
         session.execute(insertMedicionPorSensorId.bind(
                 sensorId, fechaHora, medicionId, temperatura, humedad, estado
         ));

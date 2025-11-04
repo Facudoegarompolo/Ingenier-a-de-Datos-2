@@ -18,5 +18,4 @@ public class Medicion {
 
     public Medicion() {}
 
-    // constructor + getters + setters
 }
