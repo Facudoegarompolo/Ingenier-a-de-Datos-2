@@ -44,6 +44,13 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- Cassandra Java Driver -->
+        <dependency>
+            <groupId>com.datastax.oss</groupId>
+            <artifactId>java-driver-core</artifactId>
+            <version>4.17.0</version>
+        </dependency>
+
         <!-- Lombok (opcional) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
