@@ -2,7 +2,9 @@ package com.example.model;
 
 import java.util.Date;
 import java.util.UUID;
+import lombok.Data;
 
+@Data
 public class Medicion {
 
     private UUID medicionId;
